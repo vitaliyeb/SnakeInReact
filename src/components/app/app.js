@@ -1,16 +1,23 @@
 import React from "react";
+
 import {
   HorizontalIpad,
   VerticalalIpad,
   HorizontalIphone,
   VerticalalIphone,
 } from "../display-wrappers/display-wrappers";
+import Display from './../display/display'; 
+
+const dataIcons = require('./../../services/data.json');
+
 
 export default class App extends React.Component {
   constructor() {
     super();
+
     this.state = {
       wrapperName: this.setWrappedName(),
+      dataIcons
     };
   }
 
@@ -40,17 +47,17 @@ export default class App extends React.Component {
   }
 
   render() {
-    let { wrapperName } = this.state;
+    let { wrapperName, dataIcons } = this.state;
 
     switch (wrapperName){
         case "ipad-horizontal":
-            return <HorizontalIpad><h2>children</h2></HorizontalIpad>
+            return <HorizontalIpad> <Display {...dataIcons} /> </HorizontalIpad>
         case "ipad-vertical":
-            return <VerticalalIpad><h2>children</h2></VerticalalIpad>
+            return <VerticalalIpad> <Display {...dataIcons} /> </VerticalalIpad>
         case "iphone-horizontal":
-            return <HorizontalIphone><h2>children</h2></HorizontalIphone>
-        case "iphone-vertical":    
-            return <VerticalalIphone><h2>children</h2></VerticalalIphone> 
+            return <HorizontalIphone> <Display {...dataIcons} /> </HorizontalIphone>
+        case "iphone-vertical":     
+            return <VerticalalIphone> <Display {...dataIcons} /> </VerticalalIphone> 
         }
     }
 }
