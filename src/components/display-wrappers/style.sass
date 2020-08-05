@@ -1,0 +1,151 @@
+.display-wrapped 
+    position: relative
+    margin: auto
+    -webkit-box-shadow: 3px 48px 117px -23px rgba(0,0,0,0.35)
+    -moz-box-shadow: 3px 48px 117px -23px rgba(0,0,0,0.35)
+    box-shadow: 3px 48px 117px -23px rgba(0,0,0,0.35)
+    box-sizing: border-box
+    background-color: #f6f6f6
+    width: 100%
+    border: 2px solid #9b9b9b
+    &_vertical-ipad
+        max-width: 700px
+        height: min(calc(100vh - 50px), 800px )
+        border-radius: 24px
+        padding: 40px
+        padding-bottom: 60px
+    &__ipad-camera
+        width: 6px 
+        height: 6px 
+        border-radius: 10px
+        border: 2px solid #666262
+        position: absolute
+        display: block
+        background-color: #666262
+        padding: 2px
+        background-clip: content-box
+        &_horizontal
+            left: 15px
+            top: 50%
+            transform: translate(0, -50%)
+        &_vertical 
+            top: 15px        
+            left: 50%
+            transform: translate(-50%, 0)
+    &_horizontal-ipad
+        max-width: 1000px
+        height: clamp(500px, 50vw, 600px)
+        border-radius: 24px
+        padding: 40px
+        padding-right: 60px
+    &__bottom-button
+        position: absolute   
+        width: 30px
+        height: 30px
+        border-radius: 30px
+        display: flex
+        border: 2px solid #666262
+        cursor: pointer
+        &:before 
+            content: ' '
+            width: 40%
+            height: 40% 
+            border-radius: 30%
+            display: block
+            margin: auto
+            border: 1.5px solid #9b9b9b
+        &_horizontal-ipad
+            right: 15px
+            top: 50%
+            transform: translate(0, -50%)
+        &_vertical-ipad    
+            bottom: 15px 
+            left: 50%
+            transform: translate(-50%, 0)
+    &_iphone 
+        border-radius: 18px
+        box-sizing: border-box
+    &_horizontal-iphone
+        padding: 15px 60px
+        max-width: 550px
+        height: 300px        
+    &__bottom-elements
+        display: flex 
+        cursor: pointer
+        width: 40px 
+        position: absolute
+        height: 40px
+        border-radius: 40px
+        border: 2px solid #666262
+        &:before 
+            content: ' '
+            display: block 
+            margin: auto 
+            width: 18px 
+            height: 18px 
+            border-radius: 7px 
+            border: 2px solid #66626296
+        &_horizontal
+            right: 8px
+            left: 50%
+            transform: translate(-50%, 0)   
+        &_vertical
+            bottom: 8px
+            left: 50%
+            transform: translate(-50%, 0)  
+    &_vertical-iphone
+        max-width: 300px     
+        padding: 60px 15px
+        height: min(calc(100vh - 20px), 550px)
+
+
+.top-element 
+    &__camera
+        width: 6px 
+        height: 6px 
+        border-radius: 10px
+        border: 3px solid #666262
+        position: absolute
+        display: block
+        background-color: #666262
+        padding: 1px
+        background-clip: content-box
+        &_horizontal
+            left: 8px
+            top: 50%
+            transform: translate(0, -50%)  
+        &_vertical
+            top: 8px
+            left: 50%
+            transform: translate(-50%, 0)      
+    &__speaker
+        border: 1px solid #666262
+        position: absolute
+        border-radius: 6px
+        &:before 
+            border-radius: 5px
+            position: absolute
+            background-color: #666262
+            display: block
+            content: ' '
+            width: 5px
+            height: 5px  
+        &_horizontal
+            width: 8px 
+            height: 45px 
+            left: 30px
+            top: 50%
+            transform: translate(0, -50%) 
+            &:before 
+                left: 1px
+                top: -15px
+        &_vertical
+            width: 45px 
+            height: 8px
+            left: 50%
+            top: 30px
+            transform: translate(-50%, 0)    
+            &:before 
+                top: 1px
+                right: -15px     
+
