@@ -9,7 +9,6 @@ export default class Screen extends React.Component {
     render(){
         
         return (
-    
              <p>screeeeeeeeeeeeeeeeeeeeeeeeen</p>
         )
     }
