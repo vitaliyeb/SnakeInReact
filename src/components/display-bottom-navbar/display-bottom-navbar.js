@@ -14,7 +14,9 @@ export default class DisplayBottomNavbar extends React.Component {
 
         return (
             <div className='displayBottomNavbar'>
-                { icons }
+                <div className='displayBottomNavbar__icons'>
+                    { icons }
+                </div>
             </div>
         )
     }
