@@ -15,17 +15,25 @@ export default class Screen extends React.Component {
 
     screenCapture(firstClick){
         let currentScreen = this.screenRef.current;
-        console.log(firstClick);
+        currentScreen.ondragstart = function() {
+            return false;
+          }
+        let screenWidth = currentScreen.offsetWidth;
+
+        let differenceX = 0;
         let mouseMove = ({layerX})=>{
-            console.log(layerX, firstClick);
+            differenceX = layerX - firstClick;
+            currentScreen.style.marginLeft = `${differenceX}px`
         }
 
 
+        let closeMove = function (){
+            currentScreen.removeEventListener('mousemove', mouseMove);
+        }
 
-        // currentScreen.addEventListener('mousemove', mouseMove)
-        // currentScreen.onmouseup = ()=>{
-        //     currentScreen.removeEventListener('mousemove', mouseMove);
-        // }
+        currentScreen.addEventListener('mousemove', mouseMove)
+        currentScreen.onmouseleave  = closeMove;
+        currentScreen.onmouseup = closeMove;
     }
 
     render(){
@@ -33,9 +41,10 @@ export default class Screen extends React.Component {
         return (
              <div 
                 ref={this.screenRef}
+                onDragStart={()=> false}
                 onMouseDown={({ nativeEvent: {offsetX} })=>this.screenCapture(offsetX)}
                 className='screen'>
-                 
+                 <p>ascsaacsa</p>
              </div>
         )
     }
