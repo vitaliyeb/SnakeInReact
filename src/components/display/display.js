@@ -21,7 +21,7 @@ export default class Display extends React.Component{
         let screens = [];
         for(let i = 1; i <= screensCount; ++i){
             let iconsCurrentScreen = icons.splice(0, 20);
-            screens.push(<Screen key={i}> iconsCurrentScreen </Screen>)
+            screens.push(<Screen key={i}> { iconsCurrentScreen } </Screen>)
         }
         return screens;
     }
@@ -29,7 +29,7 @@ export default class Display extends React.Component{
     render(){
         let { iconsNavbar, icons } = this.props;
         let {activeNavigateScreen} = this.state;
-        
+
         let screens = this.createScreens([...icons]);
         let dataActiveNavigateScreen = {
             activeNavigateScreen,
