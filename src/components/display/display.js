@@ -2,6 +2,7 @@ import React from "react";
 import DisplayBottomNavbar from './../display-bottom-navbar/display-bottom-navbar'
 import Screen from './../screen/screen';
 import NavigateScreen from './../navigateScreen/navigateScreen'
+import AppPopup from './../popupApp/popupApp'
 
 import './style.sass'
 
@@ -13,11 +14,13 @@ export default class Display extends React.Component{
         super();
         this.setActiveNavigateScreen = this.setActiveNavigateScreen.bind(this);
         this.setFirstScreen = this.setFirstScreen.bind(this);
+        this.setOpenPopupValue = this.setOpenPopupValue.bind(this);
         this.wrapperRef = React.createRef();
 
         this.state = {
             activeNavigateScreen: 0,
-            firstScreen: undefined
+            firstScreen: undefined,
+            openPopupValue: null
         }
     }
 
@@ -29,6 +32,7 @@ export default class Display extends React.Component{
             let setFirstScreen = i === 1 ? this.setFirstScreen : null;
             screens.push(
                 <Screen 
+                    setOpenPopupValue={this.setOpenPopupValue}
                     setActiveNavigateScreen={this.setActiveNavigateScreen}
                     allScreens = {screensCount} 
                     wrapRef = {this.wrapperRef.current}
@@ -49,10 +53,13 @@ export default class Display extends React.Component{
         let st = this.state;
         this.setState({...st, activeNavigateScreen: x})
     }
+    setOpenPopupValue(value) {
+        this.setState({...this.state, openPopupValue: value})
+    }
 
     render(){
         let { iconsNavbar, icons } = this.props;
-        let {activeNavigateScreen} = this.state;
+        let {activeNavigateScreen, openPopupValue} = this.state;
 
 
         let screens = this.createScreens([...icons]);
@@ -62,13 +69,16 @@ export default class Display extends React.Component{
             circlesLength: screens.length
         };
 
+        let popup = openPopupValue ? <AppPopup appName={openPopupValue} setOpenPopupValue={this.setOpenPopupValue} /> : null;
+
         return (
             <div className='display'>
+                { popup } 
                 <div className='display__screenWrapper' ref={this.wrapperRef} >
                     { screens }
                 </div>
                 <NavigateScreen  {...dataActiveNavigateScreen} />
-                <DisplayBottomNavbar iconsNavbar = {iconsNavbar} />
+                <DisplayBottomNavbar setOpenPopupValue={this.setOpenPopupValue} iconsNavbar = {iconsNavbar} />
             </div>
         )
     }

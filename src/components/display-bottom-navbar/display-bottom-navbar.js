@@ -9,8 +9,8 @@ export default class DisplayBottomNavbar extends React.Component {
 
 
     render(){
-        let { iconsNavbar } = this.props;
-        let icons = iconsNavbar.map((el, key)=> <Icon key={key} srcImg={el} />)
+        let { iconsNavbar, setOpenPopupValue } = this.props;
+        let icons = iconsNavbar.map((el, key)=> <Icon setOpenPopupValue={setOpenPopupValue} key={key} srcImg={el} />)
 
         return (
             <div className='displayBottomNavbar'>

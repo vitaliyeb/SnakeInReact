@@ -74,8 +74,8 @@ export default class Screen extends React.Component {
             let ml = activeNavigateScreen * wrapRef.offsetWidth;
             styleMarginLeft['marginLeft'] = ml*-1 + 'px'
         }
-        icons = icons.map((srcLink)=>{
-            return <Icon srcImg={srcLink} />
+        icons = icons.map((srcLink, ind)=>{
+            return <Icon setOpenPopupValue={this.props.setOpenPopupValue} key={ind} srcImg={srcLink} />
         })
         return (
              <div 
