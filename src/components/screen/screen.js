@@ -17,7 +17,7 @@ export default class Screen extends React.Component {
     screenCapture(firstClick){
         
         let currentScreen = this.screenRef.current;
-        let {firstScreen, setActiveNavigateScreen, activeNavigateScreen} = this.props;
+        let {firstScreen, setActiveNavigateScreen, activeNavigateScreen, allScreens} = this.props;
         let isCloseFunctionStart = false;
         let feml = parseInt(firstScreen.style.marginLeft);
         if(!feml) feml = 0;
@@ -29,8 +29,9 @@ export default class Screen extends React.Component {
         let  differenceX = 0;
         let mouseMove = ({layerX})=>{
             differenceX = layerX - firstClick;
-            if(differenceX+feml > 0) return differenceX = 0;
-            firstScreen.style.marginLeft = `${differenceX+feml}px`
+            let nml = differenceX+feml;
+            if(nml > 0 || (allScreens === activeNavigateScreen+1 && feml > nml)) return differenceX = 0;
+            firstScreen.style.marginLeft = `${nml}px`
         }
 
 

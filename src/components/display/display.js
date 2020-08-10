@@ -25,7 +25,14 @@ export default class Display extends React.Component{
         for(let i = 1; i <= screensCount; ++i){
             let iconsCurrentScreen = icons.splice(0, 20);
             let setFirstScreen = i === 1 ? this.setFirstScreen : null;
-            screens.push(<Screen setActiveNavigateScreen={this.setActiveNavigateScreen} {...this.state} setFirstScreen={setFirstScreen}  key={i}> { iconsCurrentScreen } </Screen>)
+            screens.push(
+                <Screen 
+                    setActiveNavigateScreen={this.setActiveNavigateScreen}
+                    allScreens = {screensCount} 
+                    {...this.state} setFirstScreen={setFirstScreen} 
+                    key={i}> 
+                    { iconsCurrentScreen } 
+                </Screen>)
         }
         return screens;
     }
