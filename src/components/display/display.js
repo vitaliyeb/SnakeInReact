@@ -11,8 +11,11 @@ import './style.sass'
 export default class Display extends React.Component{
     constructor(){
         super();
+        this.setActiveNavigateScreen = this.setActiveNavigateScreen.bind(this);
+        this.setFirstScreen = this.setFirstScreen.bind(this);
         this.state = {
-            activeNavigateScreen: 0
+            activeNavigateScreen: 0,
+            firstScreen: undefined
         }
     }
 
@@ -21,9 +24,19 @@ export default class Display extends React.Component{
         let screens = [];
         for(let i = 1; i <= screensCount; ++i){
             let iconsCurrentScreen = icons.splice(0, 20);
-            screens.push(<Screen key={i}> { iconsCurrentScreen } </Screen>)
+            let setFirstScreen = i === 1 ? this.setFirstScreen : null;
+            screens.push(<Screen setActiveNavigateScreen={this.setActiveNavigateScreen} {...this.state} setFirstScreen={setFirstScreen}  key={i}> { iconsCurrentScreen } </Screen>)
         }
         return screens;
+    }
+
+    setFirstScreen(element) {
+        let currentState = this.state;
+        this.setState({...currentState, firstScreen: element});
+    }
+    setActiveNavigateScreen (x){
+        let st = this.state;
+        this.setState({...st, activeNavigateScreen: x})
     }
 
     render(){
@@ -37,8 +50,8 @@ export default class Display extends React.Component{
         };
 
         return (
-            <div className='display'>
-                <div className='display__screenWrapper'>
+            <div className='display' >
+                <div className='display__screenWrapper' >
                     { screens }
                 </div>
                 <NavigateScreen {...dataActiveNavigateScreen} />
