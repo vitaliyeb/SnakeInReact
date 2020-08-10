@@ -1,6 +1,7 @@
 
 import React from 'react';
 import './style.sass';
+import Icon from './../icon/icon';
 
 
 export default class Screen extends React.Component {
@@ -73,7 +74,9 @@ export default class Screen extends React.Component {
             let ml = activeNavigateScreen * wrapRef.offsetWidth;
             styleMarginLeft['marginLeft'] = ml*-1 + 'px'
         }
-
+        icons = icons.map((srcLink)=>{
+            return <Icon srcImg={srcLink} />
+        })
         return (
              <div 
                 style={styleMarginLeft}
