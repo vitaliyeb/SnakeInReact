@@ -13,6 +13,8 @@ export default class Display extends React.Component{
         super();
         this.setActiveNavigateScreen = this.setActiveNavigateScreen.bind(this);
         this.setFirstScreen = this.setFirstScreen.bind(this);
+        this.wrapperRef = React.createRef();
+
         this.state = {
             activeNavigateScreen: 0,
             firstScreen: undefined
@@ -29,7 +31,9 @@ export default class Display extends React.Component{
                 <Screen 
                     setActiveNavigateScreen={this.setActiveNavigateScreen}
                     allScreens = {screensCount} 
-                    {...this.state} setFirstScreen={setFirstScreen} 
+                    wrapRef = {this.wrapperRef.current}
+                    {...this.state}
+                    setFirstScreen={setFirstScreen} 
                     key={i}> 
                     { iconsCurrentScreen } 
                 </Screen>)
@@ -50,18 +54,20 @@ export default class Display extends React.Component{
         let { iconsNavbar, icons } = this.props;
         let {activeNavigateScreen} = this.state;
 
+
         let screens = this.createScreens([...icons]);
         let dataActiveNavigateScreen = {
+            setActiveNavigateScreen: this.setActiveNavigateScreen,
             activeNavigateScreen,
             circlesLength: screens.length
         };
 
         return (
-            <div className='display' >
-                <div className='display__screenWrapper' >
+            <div className='display'>
+                <div className='display__screenWrapper' ref={this.wrapperRef} >
                     { screens }
                 </div>
-                <NavigateScreen {...dataActiveNavigateScreen} />
+                <NavigateScreen  {...dataActiveNavigateScreen} />
                 <DisplayBottomNavbar iconsNavbar = {iconsNavbar} />
             </div>
         )

@@ -3,12 +3,11 @@ import React from 'react';
 import './style.sass'
 
 
-const Circles = function ({isActive}){
+const Circles = function ({isActive, indexElement, setActiveNavigateScreen}){
 
     let classModify = isActive ? 'circles__item_active' : null;
-
     return(
-        <div className={`circles__item ${classModify}`}>
+        <div className={`circles__item ${classModify}`} onClick={()=>setActiveNavigateScreen(indexElement)}>
 
         </div>
     )
@@ -17,13 +16,14 @@ const Circles = function ({isActive}){
 
 export default class NavigateScreen extends React.Component {
 
+    
 
     render(){
-        let {activeNavigateScreen, circlesLength} = this.props;
+        let {activeNavigateScreen, circlesLength, setActiveNavigateScreen} = this.props;
         let circles = [];
         for( let i = 0; i < circlesLength; i++ ){
             let isActive = activeNavigateScreen === i ? true:false;
-            circles.push(<Circles key={i} isActive={isActive} />);
+            circles.push(<Circles key={i} setActiveNavigateScreen={setActiveNavigateScreen} indexElement={i} isActive={isActive} />);
         }
     
 

@@ -58,19 +58,30 @@ export default class Screen extends React.Component {
 
     componentDidMount(){
         let {setFirstScreen} = this.props;
-        if(setFirstScreen) setFirstScreen(this.screenRef.current);
+        if(setFirstScreen) {
+            let fe = this.screenRef.current;
+            setFirstScreen(fe);
+        }
     }
 
     render(){
         let icons = this.props.children;
+        let { activeNavigateScreen, setFirstScreen, wrapRef} = this.props;
+        let styleMarginLeft = {marginLeft: '0px'}
+        if(setFirstScreen && wrapRef){
+        
+            let ml = activeNavigateScreen * wrapRef.offsetWidth;
+            styleMarginLeft['marginLeft'] = ml*-1 + 'px'
+        }
 
         return (
              <div 
+                style={styleMarginLeft}
                 ref={this.screenRef}
                 onDragStart={function(){return false}}
                 onMouseDown={({ nativeEvent: {offsetX} })=>this.screenCapture(offsetX)}
                 className='screen'>
-                 
+                    {icons}
              </div>
         )
     }
