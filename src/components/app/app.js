@@ -6,7 +6,7 @@ import './style.styl'
 export default class App extends React.Component {
     constructor(){
         super();
-        this.direction = { x: 0, y: 1 };
+        this.direction = { x: 1, y: 0 };
         this.maxIndexBody = 1;
         this.sizeMap = {row: map.length, column: map[0].length}
         this.endCoordinates = {
@@ -18,6 +18,18 @@ export default class App extends React.Component {
         }
     }
 
+    onKeyDown({key}) {
+        switch (key){
+            case 'ArrowRight':
+                return this.direction = { x: 1, y: 0 };
+            case 'ArrowLeft':
+                return this.direction = { x: -1, y: 0 };   
+            case 'ArrowDown':
+                return this.direction = { x: 0, y: 1 };
+            case 'ArrowUp':
+                return this.direction = { x: 0, y: -1 };                
+        }
+    }
 
     renderMap() {
         let { map } = this.state;
@@ -65,11 +77,12 @@ export default class App extends React.Component {
 
 
     componentDidMount(){
+        document.addEventListener('keydown', this.onKeyDown.bind(this))
         setInterval(()=>{
            let bodyMap = this.bodyMove();
            this.addHeadAndTail(bodyMap)
             this.setState({map: bodyMap})
-        }, 500);
+        }, 200);
     }
 
 
