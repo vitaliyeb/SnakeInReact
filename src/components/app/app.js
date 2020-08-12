@@ -55,13 +55,19 @@ export default class App extends React.Component {
         this.plod = undefined;
     }
 
+
+
     bodyMove(){
         let {row: rowPlod, column: columnPlod } = this.plod;
         return this.state.map.map((row, indexRow)=>{
             return row.map((el, ind)=>{
                 if(el.typeId === 2) return {typeId: 3, indexBody: 1}
                 if(el.typeId === 4) return {typeId: 1}
-                if(el.typeId === 3 && el['indexBody'] === this.maxIndexBody)  this.endCoordinates['tail'] = {row:indexRow, index: ind};
+                if(el.typeId === 3) {
+                    if(el['indexBody'] === this.maxIndexBody ) this.endCoordinates['tail'] = {row:indexRow, index: ind};
+                    let ui = ++el['indexBody'];
+                    return {...el, indexBody: ui }
+                }
                 if(indexRow === rowPlod && columnPlod === ind) return {typeId: 5}
                 return el;
             })
@@ -83,7 +89,12 @@ export default class App extends React.Component {
         head['row'] = YpositionHead; 
         head['index'] = XpositionHead;
 
-        if(map[YpositionHead][XpositionHead]['typeId'] === 5) this.eatPlod();
+        if(map[YpositionHead][XpositionHead]['typeId'] === 5) {
+            ++this.maxIndexBody;
+            map[head['row']][head['index']] = {typeId: 2};
+            map[tail['row']][tail['index']] = {typeId: 3, indexBody: this.maxIndexBody};
+            return this.eatPlod();
+        };
 
         map[head['row']][head['index']] = {typeId: 2}
         map[tail['row']][tail['index']] = {typeId: 4}
