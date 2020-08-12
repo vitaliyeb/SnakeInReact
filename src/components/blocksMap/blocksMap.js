@@ -18,10 +18,14 @@ function BlockSnakeBody (){
 function BlockSnakeTail(){
     return(<div className='snake-tail'></div>)
 }
+function BlockPlod(){
+    return(<div className='plod'></div>)
+}
 
 export {
     BlockGrass,
     BlockSnakeHead,
     BlockSnakeBody,
-    BlockSnakeTail
+    BlockSnakeTail,
+    BlockPlod
 }

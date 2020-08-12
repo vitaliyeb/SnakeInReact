@@ -16,6 +16,10 @@ const snakeTail = {
     typeId: 4
 }
 
+const plod = {
+    typeId: 5
+}
+
 
 const  map = [
     [grass,grass,grass,grass,grass,grass,grass,grass,grass,grass],
