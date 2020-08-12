@@ -6,12 +6,15 @@ import './style.styl'
 export default class App extends React.Component {
     constructor(){
         super();
+        this.direction = { x: 0, y: 1 };
+        this.maxIndexBody = 1;
+        this.sizeMap = {row: map.length, column: map[0].length}
+        this.endCoordinates = {
+            head: {row: 3, index: 2},
+            tail: {row: 3, index: 0}
+        }
         this.state = {
             map: map,
-            direction: {
-                x: 0, 
-                y: 0
-            }
         }
     }
 
@@ -33,15 +36,46 @@ export default class App extends React.Component {
         });
     }
 
+    bodyMove(){
+        return this.state.map.map((row, indexRow)=>{
+            return row.map((el, ind)=>{
+                if(el.typeId === 2) return {typeId: 3, indexBody: 1}
+                if(el.typeId === 4) return {typeId: 1}
+                if(el.typeId === 3 && el['indexBody'] === this.maxIndexBody)  this.endCoordinates['tail'] = {row:indexRow, index: ind};
+                return el;
+            })
+        });
+    }
+
+    addHeadAndTail(map) {
+        let {head, tail} = this.endCoordinates;
+        let {x, y} = this.direction;
+        let {row, column} = this.sizeMap;
+        let YpositionHead = head['row']+y;
+        let XpositionHead = head['index']+x;
+
+        head['row'] = YpositionHead === row ? 0 : YpositionHead;
+        head['index'] = XpositionHead === column ? 0 : XpositionHead;
+
+        map[head['row']][head['index']] = {typeId: 2}
+        map[tail['row']][tail['index']] = {typeId: 4}
+        
+    }
+
+
+
     componentDidMount(){
         setInterval(()=>{
-            
-        }, 1000);
+           let bodyMap = this.bodyMove();
+           this.addHeadAndTail(bodyMap)
+            this.setState({map: bodyMap})
+        }, 500);
     }
+
 
     render(){
         let Map = this.renderMap();
-        console.log(Map);
+
 
         return(
             <div className='snake-map'>

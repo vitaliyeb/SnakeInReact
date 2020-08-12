@@ -8,7 +8,8 @@ const snakeHead = {
 }
 
 const snakeBody = {
-    typeId: 3
+    typeId: 3,
+    indexBody: 1
 }
 
 const snakeTail = {
@@ -20,7 +21,7 @@ const  map = [
     [grass,grass,grass,grass,grass,grass,grass,grass,grass,grass],
     [grass,grass,grass,grass,grass,grass,grass,grass,grass,grass],
     [grass,grass,grass,grass,grass,grass,grass,grass,grass,grass],
-    [snakeTail,snakeBody,snakeBody,snakeHead,grass,grass,grass,grass,grass,grass],
+    [snakeTail,snakeBody,snakeHead,grass,grass,grass,grass,grass,grass,grass],
     [grass,grass,grass,grass,grass,grass,grass,grass,grass,grass],
     [grass,grass,grass,grass,grass,grass,grass,grass,grass,grass],
     [grass,grass,grass,grass,grass,grass,grass,grass,grass,grass],
