@@ -66,8 +66,16 @@ export default class App extends React.Component {
         let YpositionHead = head['row']+y;
         let XpositionHead = head['index']+x;
 
-        head['row'] = YpositionHead === row ? 0 : YpositionHead;
-        head['index'] = XpositionHead === column ? 0 : XpositionHead;
+        XpositionHead = XpositionHead >= column ? 0 : XpositionHead;
+        XpositionHead = XpositionHead === -1 ? column-1 : XpositionHead;
+        YpositionHead = YpositionHead === row ? 0 : YpositionHead;
+        YpositionHead = YpositionHead === -1 ? row-1 : YpositionHead;
+
+
+        head['row'] = YpositionHead; 
+        head['index'] = XpositionHead;
+
+
 
         map[head['row']][head['index']] = {typeId: 2}
         map[tail['row']][tail['index']] = {typeId: 4}
@@ -82,7 +90,7 @@ export default class App extends React.Component {
            let bodyMap = this.bodyMove();
            this.addHeadAndTail(bodyMap)
             this.setState({map: bodyMap})
-        }, 200);
+        }, 100);
     }
 
 
