@@ -11,6 +11,7 @@ export default class App extends React.Component {
         this.settingConfig = {
             timeLoop: 200
         };
+        this.history = ['menu'];
         this.direction = { x: 1, y: 0 };
         this.currentDirection = {x: 1, y: 0};
         this.maxIndexBody = 1;
@@ -22,7 +23,7 @@ export default class App extends React.Component {
             tail: {row: 3, index: 0}
         }
         this.state = {
-            activeState: 'setting',
+            activeState: 'menu',
             map: map,
         }
     }
@@ -160,11 +161,13 @@ export default class App extends React.Component {
     }
 
     onStart() {
+        this.history.push('game');
         this.setState({activeState: 'game'});
         this.gameLoop()
     }
 
     openSetting(){
+        this.history.push('setting');
         this.setState({activeState: 'setting'});
     }
     setConfigProperty(properyName, value){
