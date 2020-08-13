@@ -108,9 +108,22 @@ export default class App extends React.Component {
             if(randomRow >= row) return createPlodRecursive(0)
             let freePlace = map[randomRow].filter((el)=>el['typeId'] === 1);
             if(!freePlace.length) return createPlodRecursive(randomRow+1);
-            let suitableObject = freePlace[Math.round(Math.random()*(freePlace.length-1))];
-            let column = freePlace.findIndex(el=> el === suitableObject);
-            return {row: randomRow, column};
+            let ri = Math.round(Math.random()*(freePlace.length-1));
+            let counter = 0;
+            let  rc = undefined; 
+            for(let i = 0; i < map[randomRow].length; i++){
+                let el = map[randomRow][i];
+                if(el['typeId'] === 1){
+                    if(counter === ri) {
+                        rc = i;
+                        break;
+                    }
+                    counter+=1;
+                }
+            }
+
+            console.log(counter, ri, freePlace.length, randomRow);
+            return {row: randomRow, column: rc};
         }
 
         let randomRow = Math.floor(Math.random()*map.length)
@@ -122,7 +135,6 @@ export default class App extends React.Component {
         document.addEventListener('keydown', this.onKeyDown.bind(this));
         setInterval(()=>{
             this.currentDirection = this.direction;
-            console.log(this.direction);
             let bodyMap = this.bodyMove();
             this.addHeadAndTail(bodyMap)
             if(!this.plod) this.createPlod(bodyMap);
