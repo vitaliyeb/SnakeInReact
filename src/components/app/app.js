@@ -7,6 +7,7 @@ export default class App extends React.Component {
     constructor(){
         super();
         this.direction = { x: 1, y: 0 };
+        this.currentDirection = {x: 1, y: 0};
         this.maxIndexBody = 1;
         this.plod = {row: 3, column: 5};
         this.sizeMap = {row: map.length, column: map[0].length}
@@ -22,13 +23,13 @@ export default class App extends React.Component {
     onKeyDown({key}) {
         switch (key){
             case 'ArrowRight':
-                return this.direction['x'] === 0 ? this.direction = { x: 1, y: 0 } : null;
+                return this.currentDirection['x'] === 0 ? this.direction = { x: 1, y: 0 } : null;
             case 'ArrowLeft':
-                return this.direction['x'] === 0 ? this.direction = { x: -1, y: 0 } : null;
+                return this.currentDirection['x'] === 0 ? this.direction = { x: -1, y: 0 } : null;
             case 'ArrowDown':
-                this.direction['y'] === 0 ? this.direction = { x: 0, y: 1 } : null;
+                return this.currentDirection['y'] === 0 ? this.direction = { x: 0, y: 1 } : null;
             case 'ArrowUp':
-                this.direction['y'] === 0 ? this.direction = { x: 0, y: -1 } : null;              
+                return this.currentDirection['y'] === 0 ? this.direction = { x: 0, y: -1 } : null;              
         }
     }
 
@@ -118,13 +119,15 @@ export default class App extends React.Component {
     }
 
     componentDidMount(){
-        document.addEventListener('keydown', this.onKeyDown.bind(this))
+        document.addEventListener('keydown', this.onKeyDown.bind(this));
         setInterval(()=>{
+            this.currentDirection = this.direction;
+            console.log(this.direction);
             let bodyMap = this.bodyMove();
             this.addHeadAndTail(bodyMap)
             if(!this.plod) this.createPlod(bodyMap);
             this.setState({map: bodyMap})
-        }, 200);
+        }, 500);
     }
 
 
