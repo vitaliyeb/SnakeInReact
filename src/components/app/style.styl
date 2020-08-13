@@ -1,8 +1,19 @@
 .snake-map
-    width: clamp(310px, 100vw, 800px)
-    height clamp(310px, 100vw, 800px)
-    background-color: #673ab7
-    margin: auto
     display: grid 
+    width: 100%
+    height 100%
     grid-template-columns: repeat(10, 1fr)
     grid-template-rows: repeat(10, 1fr)
+
+
+body 
+    background-image: url('./../../../public/images/bgPage.png') 
+    background-size: 100% 100%   
+
+
+
+.game-window
+    width: clamp(310px, 100vw, 800px)
+    height clamp(310px, 100vw, 800px)
+    border: 1px solid #000
+    margin: auto

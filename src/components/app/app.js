@@ -1,11 +1,16 @@
 import React from 'react';
 import map from './../../map';
+import Menu from './../menu/menu';
+import Setting from './../setting/setting';
 import { BlockGrass, BlockSnakeHead, BlockSnakeBody, BlockSnakeTail, BlockPlod } from './../blocksMap/blocksMap';
 import './style.styl'
 
 export default class App extends React.Component {
     constructor(){
         super();
+        this.settingConfig = {
+            timeLoop: 200
+        };
         this.direction = { x: 1, y: 0 };
         this.currentDirection = {x: 1, y: 0};
         this.maxIndexBody = 1;
@@ -17,6 +22,7 @@ export default class App extends React.Component {
             tail: {row: 3, index: 0}
         }
         this.state = {
+            activeState: 'setting',
             map: map,
         }
     }
@@ -141,24 +147,52 @@ export default class App extends React.Component {
 
     componentDidMount(){
         document.addEventListener('keydown', this.onKeyDown.bind(this));
+    }
+
+    gameLoop(){
         this.intervalId = setInterval(()=>{
             this.currentDirection = this.direction;
             let bodyMap = this.bodyMove();
             this.addHeadAndTail(bodyMap)
             if(!this.plod) this.createPlod(bodyMap);
             this.setState({map: bodyMap})
-        }, 200);
+        }, this.settingConfig.timeLoop);
     }
 
+    onStart() {
+        this.setState({activeState: 'game'});
+        this.gameLoop()
+    }
+
+    openSetting(){
+        this.setState({activeState: 'setting'});
+    }
+    setConfigProperty(properyName, value){
+        console.log(properyName, value)
+    }
 
     render(){
-        let Map = this.renderMap();
+        let {activeState, map} = this.state;
+        let Component;
 
+        switch (activeState){
+            case 'menu':
+                Component = <Menu openSetting={this.openSetting.bind(this)} start={this.onStart.bind(this)} />;
+                break;
+            case 'game':
+                let Map = this.renderMap();
+                Component = (<div className='snake-map'>{ Map }</div>);
+                break;
+            case 'setting':
+                Component = <Setting settingConfig={this.settingConfig} setConfigProperty={this.setConfigProperty.bind(this)} />;
+                break;    
+
+        }        
 
         return(
-            <div className='snake-map'>
-                { Map }
-            </div> 
+            <div className="game-window">
+                { Component }
+            </div>
         )
     }
 } 

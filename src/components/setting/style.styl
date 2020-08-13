@@ -1,0 +1,29 @@
+.setting
+    width: 100% 
+    height 100%
+    box-sizing: border-box
+    padding: clamp(20px, 4vw, 50px) clamp(5px, 2vw, 20px)
+    &__row 
+        display: flex
+        justify-content: space-between
+        align-items: center
+        border-bottom: 1px solid #322a2a5c
+    &__subheading 
+        font-size: clamp(18px, 4vw, 26px)    
+        margin: clamp(10px, 3vw, 15px) 0
+    &__variables
+        display: flex
+        & p 
+            font-size: clamp(16px, 2vw, 18px)
+            cursor: pointer
+            margin: 0 clamp(5px, 1vw, 15px)
+            &.active 
+                border-bottom: 1px solid #000
+                box-sizing: border-box
+    & p 
+        font-family:  cursive
+    & h2 
+        font-size: clamp(18px, 3vw, 26px)    
+        font-family:  cursive
+        text-align: center
+        margin: clamp(5px, 1vw, 10px) 0
