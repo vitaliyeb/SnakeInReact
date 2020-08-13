@@ -9,6 +9,7 @@ export default class App extends React.Component {
         this.direction = { x: 1, y: 0 };
         this.currentDirection = {x: 1, y: 0};
         this.maxIndexBody = 1;
+        this.intervalId = undefined;
         this.plod = {row: 3, column: 5};
         this.sizeMap = {row: map.length, column: map[0].length}
         this.endCoordinates = {
@@ -56,7 +57,10 @@ export default class App extends React.Component {
         this.plod = undefined;
     }
 
-
+    endGame(){
+        console.log('end');
+        clearInterval(this.intervalId);
+    }
 
     bodyMove(){
         let {row: rowPlod, column: columnPlod } = this.plod;
@@ -90,6 +94,12 @@ export default class App extends React.Component {
         head['row'] = YpositionHead; 
         head['index'] = XpositionHead;
 
+        if(map[YpositionHead][XpositionHead]['typeId'] === 3 || map[YpositionHead][XpositionHead]['typeId'] === 4){
+            map[head['row']-y][head['index']-x] = {typeId: 2};
+            map[tail['row']][tail['index']] = {typeId: 4}
+            return this.endGame();
+        }
+
         if(map[YpositionHead][XpositionHead]['typeId'] === 5) {
             ++this.maxIndexBody;
             map[head['row']][head['index']] = {typeId: 2};
@@ -121,8 +131,6 @@ export default class App extends React.Component {
                     counter+=1;
                 }
             }
-
-            console.log(counter, ri, freePlace.length, randomRow);
             return {row: randomRow, column: rc};
         }
 
@@ -133,7 +141,7 @@ export default class App extends React.Component {
 
     componentDidMount(){
         document.addEventListener('keydown', this.onKeyDown.bind(this));
-        setInterval(()=>{
+        this.intervalId = setInterval(()=>{
             this.currentDirection = this.direction;
             let bodyMap = this.bodyMove();
             this.addHeadAndTail(bodyMap)
