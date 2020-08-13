@@ -127,7 +127,7 @@ export default class App extends React.Component {
             this.addHeadAndTail(bodyMap)
             if(!this.plod) this.createPlod(bodyMap);
             this.setState({map: bodyMap})
-        }, 500);
+        }, 200);
     }
 
 
