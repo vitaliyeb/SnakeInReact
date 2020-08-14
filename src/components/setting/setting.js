@@ -21,8 +21,10 @@ export default class Setting extends React.Component {
         this.setState({[name]: value});
     }
 
+
     render(){
         let { timeLoop } = this.state;
+        let { goBack } = this.props;
 
         return(
             <div className='setting'>
@@ -35,6 +37,7 @@ export default class Setting extends React.Component {
                         <p onClick={()=>this.setProperty('timeLoop', 600)} className={timeLoop === 600 ? 'active' : null}>Легко</p>
                     </div>
                 </div>
+                <p className='back' onClick={()=>goBack()}>Назад</p>
             </div>
         )
     }

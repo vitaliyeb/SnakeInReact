@@ -5,12 +5,21 @@ import Setting from './../setting/setting';
 import { BlockGrass, BlockSnakeHead, BlockSnakeBody, BlockSnakeTail, BlockPlod } from './../blocksMap/blocksMap';
 import './style.styl'
 
+
+function Score({value}){
+
+    return(
+        <p className='score'>{value}</p>
+    )
+}
+
 export default class App extends React.Component {
     constructor(){
         super();
         this.settingConfig = {
             timeLoop: 200
         };
+        this.scoreCouner = 0;
         this.history = ['menu'];
         this.direction = { x: 1, y: 0 };
         this.currentDirection = {x: 1, y: 0};
@@ -24,7 +33,7 @@ export default class App extends React.Component {
         }
         this.state = {
             activeState: 'menu',
-            map: map,
+            map: this.deepCopy(map),
         }
     }
 
@@ -37,7 +46,7 @@ export default class App extends React.Component {
             case 'ArrowDown':
                 return this.currentDirection['y'] === 0 ? this.direction = { x: 0, y: 1 } : null;
             case 'ArrowUp':
-                return this.currentDirection['y'] === 0 ? this.direction = { x: 0, y: -1 } : null;              
+                return this.currentDirection['y'] === 0 ? this.direction = { x: 0, y: -1 } : null;          
         }
     }
 
@@ -60,13 +69,32 @@ export default class App extends React.Component {
         });
     }
     
+    deepCopy (a){
+        return a.map(el=>el.map(el=>({...el})));
+    }
+
     eatPlod() {
         this.plod = undefined;
+        this.scoreCouner +=100;
+    }
+
+    resetData() {
+        this.direction = { x: 1, y: 0 };
+        this.currentDirection = {x: 1, y: 0};
+        this.maxIndexBody = 1;
+        this.plod = {row: 3, column: 5};
+        this.endCoordinates = {
+            head: {row: 3, index: 2},
+            tail: {row: 3, index: 0}
+        }
+        this.scoreCouner = 0;
     }
 
     endGame(){
-        console.log('end');
         clearInterval(this.intervalId);
+        setTimeout(()=>this.setState({activeState: 'menu', map: this.deepCopy(map) }), 2000)
+        alert(`Вы набрали ${this.scoreCouner} очков`)
+        this.resetData();
     }
 
     bodyMove(){
@@ -171,12 +199,19 @@ export default class App extends React.Component {
         this.setState({activeState: 'setting'});
     }
     setConfigProperty(properyName, value){
-        console.log(properyName, value)
+        this.settingConfig[properyName] = value;
+    }
+
+    goBack(){
+        let history = this.history;
+        this.history.pop();
+        this.setState({activeState: history[history.length-1]})
     }
 
     render(){
         let {activeState, map} = this.state;
         let Component;
+
 
         switch (activeState){
             case 'menu':
@@ -187,13 +222,14 @@ export default class App extends React.Component {
                 Component = (<div className='snake-map'>{ Map }</div>);
                 break;
             case 'setting':
-                Component = <Setting settingConfig={this.settingConfig} setConfigProperty={this.setConfigProperty.bind(this)} />;
+                Component = <Setting settingConfig={this.settingConfig} goBack={this.goBack.bind(this)} setConfigProperty={this.setConfigProperty.bind(this)} />;
                 break;    
 
-        }        
+        }    
 
         return(
             <div className="game-window">
+                {activeState === 'game' ? <Score value={this.scoreCouner} /> : null}
                 { Component }
             </div>
         )
